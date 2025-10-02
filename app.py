@@ -11,7 +11,8 @@ import io
 st.set_page_config(page_title="Phân Tích Điểm Bất Thường", layout="wide", page_icon="📊")
 
 # Hotlink Imgur cho hình ảnh (ví dụ, bạn cần thay thế bằng URL thực tế của mình)
-IMGUR_IMAGE_URL = "https://i.imgur.com/your_image_link.png" # THAY THẾ URL NÀY BẰNG HÌNH ẢNH CỦA BẠN
+# RẤT QUAN TRỌNG: THAY THẾ URL NÀY BẰNG HÌNH ẢNH THỰC TẾ CỦA BẠN
+IMGUR_IMAGE_URL = "https://i.imgur.com/your_image_link.png"
 
 # CSS tùy chỉnh
 st.markdown(f"""
@@ -35,40 +36,37 @@ st.markdown(f"""
         padding: 10px;
     }}
 
-    /* Tùy chỉnh Slider Z-Score: Cố gắng tạo hiệu ứng 3D và thay đổi cursor */
-    /* Tìm widget slider Z-Score theo nhãn trong sidebar */
-    [data-testid="stSidebarContent"] .stSlider label {{
-        font-weight: bold;
-    }}
+    /* === TÙY CHỈNH SLIDER Z-SCORE === */
+    /* Nhắm mục tiêu cụ thể vào slider trong sidebar (Ngưỡng Z-Score) */
     
-    /* Thanh trượt (track) */
-    [data-testid="stSidebarContent"] .stSlider > div > div > div:nth-child(1) > div:nth-child(1) {{
+    /* 1. Thanh trượt chung (Track) */
+    [data-testid="stSidebarContent"] .stSlider > div > div:nth-child(2) > div {{
         background: #ccc; /* Màu nền thanh trượt */
         box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); /* Hiệu ứng lõm (3D-like) */
         border-radius: 5px;
     }}
     
-    /* Phần đã chọn (fill) */
-    [data-testid="stSidebarContent"] .stSlider > div > div > div:nth-child(1) > div:nth-child(2) {{
+    /* 2. Phần đã chọn (Fill) */
+    [data-testid="stSidebarContent"] .stSlider > div > div:nth-child(2) > div > div[data-testid="stTrackFill"] {{
         background: #4CAF50; /* Màu fill */
         box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); /* Hiệu ứng nổi (3D-like) */
         border-radius: 5px;
     }}
 
-    /* Núm kéo (thumb/cursor) */
-    [data-testid="stSidebarContent"] .stSlider > div > div > div:nth-child(2) > div:nth-child(1) {{
+    /* 3. Núm kéo (Thumb) và Cursor */
+    [data-testid="stSidebarContent"] [data-testid="stThumbValue"] {{
         background: #FF5722; /* Màu núm */
         border: 3px solid #E64A19; /* Viền */
-        width: 20px;
-        height: 20px;
+        width: 25px !important; /* Tăng kích thước núm */
+        height: 25px !important; 
         border-radius: 50%; /* Hình tròn */
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4), 0 6px 20px 0 rgba(0,0,0,0.3); /* Hiệu ứng nổi 3D */
-        cursor: grab !important; /* Thay đổi cursor */
+        cursor: grab !important; /* THAY ĐỔI CURSOR */
         transform: scale(1.1); /* Hơi to hơn */
     }}
     
-    /* Hiệu ứng khi kéo (active state) */
-    [data-testid="stSidebarContent"] .stSlider > div > div > div:nth-child(2) > div:nth-child(1):active {{
+    /* 4. Hiệu ứng khi kéo (Active state) */
+    [data-testid="stSidebarContent"] [data-testid="stThumbValue"]:active {{
         cursor: grabbing !important;
         transform: scale(1.3); /* To hơn khi kéo */
         box-shadow: 0 5px 15px rgba(0,0,0,0.5);
@@ -122,7 +120,8 @@ with col_upload:
     uploaded_file = st.file_uploader("📂 Upload bảng điểm (CSV)", type="csv")
 
 with col_image:
-    st.image(IMGUR_IMAGE_URL, width=540, caption="Hình ảnh minh họa dữ liệu (1080x560)") # Hiển thị hình ảnh
+    # Hiển thị hình ảnh từ hotlink Imgur
+    st.image(IMGUR_IMAGE_URL, width=540, caption="Hình ảnh minh họa dữ liệu (1080x560)")
 
 if uploaded_file is not None:
     # Đọc file CSV
