@@ -37,36 +37,55 @@ st.markdown(f"""
     }}
 
     /* === TÙY CHỈNH SLIDER Z-SCORE === */
-    /* Nhắm mục tiêu cụ thể vào slider trong sidebar (Ngưỡng Z-Score) */
     
     /* 1. Thanh trượt chung (Track) */
     [data-testid="stSidebarContent"] .stSlider > div > div:nth-child(2) > div {{
-        background: #ccc; /* Màu nền thanh trượt */
+        background: #ccc; /* Màu nền thanh trượt mặc định */
         box-shadow: inset 0 1px 3px rgba(0,0,0,0.5); /* Hiệu ứng lõm (3D-like) */
         border-radius: 5px;
+        transition: background 0.2s; /* Thêm chuyển động mượt mà */
+    }}
+
+    /* Hiệu ứng khi di chuột vào thanh trượt */
+    [data-testid="stSidebarContent"] .stSlider > div > div:nth-child(2) > div:hover {{
+        background: #bbb; /* Màu sáng hơn khi hover */
     }}
     
     /* 2. Phần đã chọn (Fill) */
     [data-testid="stSidebarContent"] .stSlider > div > div:nth-child(2) > div > div[data-testid="stTrackFill"] {{
-        background: #4CAF50; /* Màu fill */
-        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3); /* Hiệu ứng nổi (3D-like) */
+        background: #4CAF50; /* Màu fill mặc định (Xanh lá) */
+        box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
         border-radius: 5px;
+        transition: background 0.2s;
     }}
+    
+    /* Hiệu ứng khi đang kéo/active (Phần fill chuyển sang màu đậm hơn) */
+    [data-testid="stSidebarContent"] [data-testid="stThumbValue"]:active ~ div[data-testid="stTrackFill"] {{
+        background: #388E3C; /* Xanh lá đậm hơn khi active */
+    }}
+
 
     /* 3. Núm kéo (Thumb) và Cursor */
     [data-testid="stSidebarContent"] [data-testid="stThumbValue"] {{
-        background: #FF5722; /* Màu núm */
+        background: #FF5722; /* Màu núm mặc định (Cam) */
         border: 3px solid #E64A19; /* Viền */
-        width: 25px !important; /* Tăng kích thước núm */
+        width: 25px !important; 
         height: 25px !important; 
-        border-radius: 50%; /* Hình tròn */
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4), 0 6px 20px 0 rgba(0,0,0,0.3); /* Hiệu ứng nổi 3D */
-        cursor: grab !important; /* THAY ĐỔI CURSOR */
-        transform: scale(1.1); /* Hơi to hơn */
+        border-radius: 50%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.4), 0 6px 20px 0 rgba(0,0,0,0.3);
+        cursor: grab !important;
+        transform: scale(1.1); 
+        transition: all 0.2s ease; /* Thêm chuyển động mượt mà */
     }}
     
-    /* 4. Hiệu ứng khi kéo (Active state) */
+    /* 4. Hiệu ứng khi di chuột vào núm kéo */
+    [data-testid="stSidebarContent"] [data-testid="stThumbValue"]:hover {{
+        background: #FF9800; /* Màu sáng hơn khi hover (Vàng cam) */
+    }}
+
+    /* 5. Hiệu ứng khi đang kéo (Active state) */
     [data-testid="stSidebarContent"] [data-testid="stThumbValue"]:active {{
+        background: #D32F2F; /* Màu Đỏ khi đang kéo */
         cursor: grabbing !important;
         transform: scale(1.3); /* To hơn khi kéo */
         box-shadow: 0 5px 15px rgba(0,0,0,0.5);
@@ -76,7 +95,7 @@ st.markdown(f"""
     .file-uploader-container {{
         display: flex;
         flex-direction: row;
-        gap: 20px; /* Khoảng cách giữa các cột */
+        gap: 20px;
     }}
 </style>
 """, unsafe_allow_html=True)
