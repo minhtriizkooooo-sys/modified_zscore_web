@@ -12,7 +12,7 @@ st.set_page_config(page_title="Phân Tích Điểm Bất Thường", layout="wid
 
 # Hotlink Imgur cho hình ảnh (ví dụ, bạn cần thay thế bằng URL thực tế của mình)
 # RẤT QUAN TRỌNG: THAY THẾ URL NÀY BẰNG HÌNH ẢNH THỰC TẾ CỦA BẠN
-IMGUR_IMAGE_URL = "https://i.imgur.com/your_image_link.png"
+IMGUR_IMAGE_URL = "https://i.imgur.com/your_image_link.png" # Cần thay thế link này bằng link ảnh thật của bạn
 
 # CSS tùy chỉnh
 st.markdown(f"""
@@ -86,8 +86,8 @@ st.markdown(f"""
     /* 5. Hiệu ứng khi đang kéo (Active state) */
     [data-testid="stSidebarContent"] [data-testid="stThumbValue"]:active {{
         background: #D32F2F; /* Màu Đỏ khi đang kéo */
-        cursor: grabbing !important;
-        transform: scale(1.3); /* To hơn khi kéo */
+        cursor: grabbing !important; /* Thay đổi con trỏ chuột */
+        transform: scale(1.3); /* Phóng to nút kéo */
         box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     }}
 
@@ -106,7 +106,7 @@ st.markdown(f"""
 col_logo, col_title = st.columns([1,6])
 with col_logo:
     try:
-        st.image("Logo_Marie_Curie.png", width=100)
+        st.image("Logo_Marie_Curie.png", width=100) # Đảm bảo file này có sẵn
     except:
         st.write("🏫 THPT Marie Curie")
 with col_title:
